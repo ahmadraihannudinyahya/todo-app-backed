@@ -35,6 +35,13 @@ const TaskRepository = {
       },
     });
   },
+  deleteTaskById : async (id) =>{
+    await Task.destroy({
+      where : {
+        id, 
+      }, 
+    });
+  },
   toogleStatusTaskById : async (id) => {
     const { status } = await Task.findOne({
       where : {

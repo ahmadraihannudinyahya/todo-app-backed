@@ -10,6 +10,7 @@ class TaskHandler{
     this.getTaskByTodoIdHandler = this.getTaskByTodoIdHandler.bind(this);
     this.putStatusTaskByTaskId = this.putStatusTaskByTaskId.bind(this);
     this.patchTaskByTaskIdHandler = this.patchTaskByTaskIdHandler.bind(this);
+    this.deleteTaskByTaskIdHandler = this.deleteTaskByTaskIdHandler.bind(this);
   };
 
   async postTaskHandler(req, res, next){
@@ -65,6 +66,19 @@ class TaskHandler{
       res.send({
         status : 'succes',
         id : req.params.taskId,
+      })
+    } catch (error) {
+      next(error);
+    };
+  }
+
+  async deleteTaskByTaskIdHandler(req, res, next){
+    try {
+      await this.taskRepository.verifyTaskFound(req.params.taskId);
+      await this.taskRepository.deleteTaskById(req.params.taskId);
+      res.send({
+        status : 'success',
+        id : req.params.taskId, 
       })
     } catch (error) {
       next(error);
