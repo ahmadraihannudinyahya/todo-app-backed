@@ -1,14 +1,16 @@
 const handleDateToStringFormat = require('../../Helper/handleDateToStringFormat');
 
 class HandleTodos{
-  constructor({todosValidation, todosRepository}){
+  constructor({todosValidation, todosRepository, taskRepository}){
     this.todosRepository = todosRepository;
     this.todosValidation = todosValidation;
+    this.taskRepository = taskRepository;
 
     this.postTodosHandler = this.postTodosHandler.bind(this);
     this.getAllTodosHandler = this.getAllTodosHandler.bind(this);
     this.getTodoByIdHandler = this.getTodoByIdHandler.bind(this);
     this.editTodosByIdHandler = this.editTodosByIdHandler.bind(this);
+    this.deleteTodosByIdHandler = this.deleteTodosByIdHandler.bind(this);
   }
 
   async postTodosHandler(req, res, next){
@@ -66,6 +68,20 @@ class HandleTodos{
         status : 'success',
         id : req.params.id
       })
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteTodosByIdHandler(req, res, next){
+    try {
+      await this.todosRepository.verifyTodosFound(req.params.id);
+      await this.taskRepository.deleteAllTaskByTodoId(req.params.id);
+      await this.todosRepository.deleteTodosById(req.params.id);
+      res.send({
+        status : 'success',
+        id : req.params.id, 
+      });
     } catch (error) {
       next(error);
     }

@@ -6,6 +6,7 @@ const route = (handler) =>{
   router.get('/todos', handler.getAllTodosHandler);
   router.get('/todos/:id', handler.getTodoByIdHandler);
   router.patch('/todos/:id', handler.editTodosByIdHandler);
+  router.delete('/todos/:id', handler.deleteTodosByIdHandler);
   return router;
 }
 

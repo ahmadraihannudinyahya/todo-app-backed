@@ -28,6 +28,13 @@ const TodosRepository = {
       },
     });
   },
+  deleteTodosById : async (id) =>{
+    await Todos.destroy({
+      where : {
+        id, 
+      }, 
+    });
+  },
   verifyTodosFound : async (id) => {
     const todo = await Todos.findOne({
       where : {
