@@ -4,6 +4,7 @@ const cors = require('cors');
 const ClientError = require('../Commons/ClientError');
 
 const todosInterface = require('../Interface/Todos');
+const taskInterface = require('../Interface/Task');
 
 const createServer = (container) => {
   const app = express();
@@ -11,6 +12,8 @@ const createServer = (container) => {
   app.use(cors());
 
   app.use(todosInterface(container));
+  app.use(taskInterface(container));
+
   app.use((error, req, res, next) => {
     if (error) {
       if (error instanceof ClientError) {
