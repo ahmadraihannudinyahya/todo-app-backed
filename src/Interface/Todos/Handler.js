@@ -7,7 +7,8 @@ class HandleTodos{
 
     this.postTodosHandler = this.postTodosHandler.bind(this);
     this.getAllTodosHandler = this.getAllTodosHandler.bind(this);
-    this.getTodoByIdHandler = this.getTodoByIdHandler.bind(this)
+    this.getTodoByIdHandler = this.getTodoByIdHandler.bind(this);
+    this.editTodosByIdHandler = this.editTodosByIdHandler.bind(this);
   }
 
   async postTodosHandler(req, res, next){
@@ -52,6 +53,19 @@ class HandleTodos{
           createdAt : handleDateToStringFormat(todo.createdAt), 
         }, 
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async editTodosByIdHandler(req, res, next){
+    try {
+      this.todosValidation.ValidatePatchTodosPayload(req.body);
+      await this.todosRepository.editTodosById(req.body, req.params.id);
+      res.send({
+        status : 'success',
+        id : req.params.id
+      })
     } catch (error) {
       next(error);
     }

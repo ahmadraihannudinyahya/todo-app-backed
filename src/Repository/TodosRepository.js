@@ -15,5 +15,12 @@ const TodosRepository = {
       }
     });
   },
+  editTodosById : async (payload, id)=>{
+    await Todos.update(payload, {
+      where : {
+        id
+      },
+    });
+  },
 }
 module.exports = TodosRepository;

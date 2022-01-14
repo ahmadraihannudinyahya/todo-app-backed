@@ -5,6 +5,7 @@ const route = (handler) =>{
   router.post('/todos', handler.postTodosHandler);
   router.get('/todos', handler.getAllTodosHandler);
   router.get('/todos/:id', handler.getTodoByIdHandler);
+  router.patch('/todos/:id', handler.editTodosByIdHandler);
   return router;
 }
 
