@@ -9,6 +9,7 @@ class TaskHandler{
     this.postTaskHandler = this.postTaskHandler.bind(this);
     this.getTaskByTodoIdHandler = this.getTaskByTodoIdHandler.bind(this);
     this.putStatusTaskByTaskId = this.putStatusTaskByTaskId.bind(this);
+    this.patchTaskByTaskIdHandler = this.patchTaskByTaskIdHandler.bind(this);
   };
 
   async postTaskHandler(req, res, next){
@@ -54,6 +55,20 @@ class TaskHandler{
     } catch (error) {
       next(error);
     };
+  }
+
+  async patchTaskByTaskIdHandler(req, res, next){
+    try {
+      this.taskValidation.validatePatchTaskPayload(req.body);
+      await this.taskRepository.verifyTaskFound(req.params.taskId);
+      await this.taskRepository.editTaskById(req.body, req.params.taskId);
+      res.send({
+        status : 'succes',
+        id : req.params.taskId,
+      })
+    } catch (error) {
+      next(error);
+    }
   }
 }
 

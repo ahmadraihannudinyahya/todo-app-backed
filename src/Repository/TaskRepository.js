@@ -28,6 +28,13 @@ const TaskRepository = {
       throw new NotFoundError('task not found');
     };
   },
+  editTaskById : async (payload, id) => {
+    await Task.update(payload, {
+      where : {
+        id
+      },
+    });
+  },
   toogleStatusTaskById : async (id) => {
     const { status } = await Task.findOne({
       where : {

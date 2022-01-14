@@ -5,6 +5,7 @@ const route = (handler) =>{
   router.post('/task/todoId/:todoId', handler.postTaskHandler);
   router.get('/task/todoId/:todoId', handler.getTaskByTodoIdHandler);
   router.put('/task/:taskId', handler.putStatusTaskByTaskId);
+  router.patch('/task/:taskId', handler.patchTaskByTaskIdHandler);
   return router;
 }
 
