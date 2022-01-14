@@ -1,4 +1,6 @@
-const {Todos} = require('../../models')
+const {Todos} = require('../../models');
+const NotFoundError = require('../Commons/NotFoundError');
+
 const TodosRepository = {
   addTodos : async (payload) =>{
     const id = `todos-${Date.now()}${Math.floor(Math.random()*10)}`;
@@ -22,5 +24,15 @@ const TodosRepository = {
       },
     });
   },
+  verifyTodosFound : async (id) => {
+    const todo = await Todos.findOne({
+      where : {
+        id
+      }
+    });
+    if(!todo){
+      throw new NotFoundError('todos not found');
+    }
+  }
 }
 module.exports = TodosRepository;
