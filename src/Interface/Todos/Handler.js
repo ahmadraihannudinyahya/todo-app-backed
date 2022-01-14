@@ -45,6 +45,7 @@ class HandleTodos{
 
   async getTodoByIdHandler(req, res, next){
     try {
+      await this.todosRepository.verifyTodosFound(req.params.id);
       const todo = await this.todosRepository.getTodoById(req.params.id);
       res.send({
         status : 'success',
@@ -63,6 +64,7 @@ class HandleTodos{
   async editTodosByIdHandler(req, res, next){
     try {
       this.todosValidation.ValidatePatchTodosPayload(req.body);
+      await this.todosRepository.verifyTodosFound(req.params.id); 
       await this.todosRepository.editTodosById(req.body, req.params.id);
       res.send({
         status : 'success',
