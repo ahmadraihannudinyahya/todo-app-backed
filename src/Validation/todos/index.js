@@ -4,8 +4,8 @@ const { PostTodosPayloadSchema } = require('./scheme');
 const TodosValidation = {
   validatePostTodosPayload : (payload) => {
     const result = PostTodosPayloadSchema.validate(payload);
-    if (validationResult.error) {
-      throw new InvarianError(validationResult.error.message);
+    if (result.error) {
+      throw new InvarianError(result.error.message);
     };
   },
 };
