@@ -7,6 +7,13 @@ const TodosRepository = {
   },
   getAllTodos : async () =>{
     return Todos.findAll();
-  }
+  },
+  getTodoById : async (id) => {
+    return Todos.findOne({
+      where : {
+        id
+      }
+    });
+  },
 }
 module.exports = TodosRepository;

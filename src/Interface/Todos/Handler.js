@@ -7,6 +7,7 @@ class HandleTodos{
 
     this.postTodosHandler = this.postTodosHandler.bind(this);
     this.getAllTodosHandler = this.getAllTodosHandler.bind(this);
+    this.getTodoByIdHandler = this.getTodoByIdHandler.bind(this)
   }
 
   async postTodosHandler(req, res, next){
@@ -33,6 +34,23 @@ class HandleTodos{
           desc : todo.desc, 
           createdAt : handleDateToStringFormat(todo.createdAt)
         }))
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getTodoByIdHandler(req, res, next){
+    try {
+      const todo = await this.todosRepository.getTodoById(req.params.id);
+      res.send({
+        status : 'success',
+        todo : {
+          id : todo.id, 
+          title : todo.title, 
+          desc : todo.desc, 
+          createdAt : handleDateToStringFormat(todo.createdAt), 
+        }, 
       });
     } catch (error) {
       next(error);
