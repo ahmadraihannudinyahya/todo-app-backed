@@ -6,6 +6,13 @@ const TaskRepository = {
     await Task.create({...payload, id, status : "onGoing"});
     return id;
   },
+  getAllTaskByTodoId : async (todoId) =>{
+    return Task.findAll({
+      where : {
+        todoId
+      }
+    });
+  },
 };
 
 module.exports = TaskRepository;
