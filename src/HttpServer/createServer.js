@@ -1,12 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 
+const todosInterface = require('../Interface/Todos');
+
 const createServer = () => {
   const app = express();
   app.use(express.json());
   app.use(cors());
 
-
+  app.use(todosInterface());
   app.use((error, req, res, next) => {
     if (error) {
       if (error instanceof ClientError) {
