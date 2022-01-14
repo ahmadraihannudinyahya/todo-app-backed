@@ -8,7 +8,11 @@ const TodosRepository = {
     return id;
   },
   getAllTodos : async () =>{
-    return Todos.findAll();
+    return Todos.findAll({
+      order : [
+        ['createdAt', 'ASC']
+      ],
+    });
   },
   getTodoById : async (id) => {
     return Todos.findOne({

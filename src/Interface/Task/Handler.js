@@ -8,6 +8,7 @@ class TaskHandler{
 
     this.postTaskHandler = this.postTaskHandler.bind(this);
     this.getTaskByTodoIdHandler = this.getTaskByTodoIdHandler.bind(this);
+    this.putStatusTaskByTaskId = this.putStatusTaskByTaskId.bind(this);
   };
 
   async postTaskHandler(req, res, next){
@@ -37,6 +38,19 @@ class TaskHandler{
           createdAt : handleDateToStringFormat(task.createdAt), 
         })),
       });
+    } catch (error) {
+      next(error);
+    };
+  }
+
+  async putStatusTaskByTaskId(req, res, next){
+    try {
+      await this.taskRepository.verifyTaskFound(req.params.taskId);
+      await this.taskRepository.toogleStatusTaskById(req.params.taskId);
+      res.send({
+        status : 'success',
+        id : req.params.taskId,
+      })
     } catch (error) {
       next(error);
     };
